@@ -64,7 +64,6 @@ class SigninViewModel(app: Application) : BaseViewModel(app) {
             Prefs.userName = response.data.userName
             Prefs.userId = response.data.userId
             toast("로그인 되었습니다.")
-//            finishActivity()
         } else {
             toast(response.message ?: "알 수 없는 오류가 발생했습니다.")
         }
