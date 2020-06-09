@@ -59,4 +59,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$arch_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$arch_version"
 
+    implementation "com.github.benimario:ankomvvm:0.1.0"
+
 }
