@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.parayo">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme"
-        android:name=".App">
+        android:name=".App"
+        tools:targetApi="n">
         <activity android:name=".intro.IntroActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
@@ -20,5 +21,6 @@
         </intent-filter>
         </activity>
         <activity android:name=".signup.SignupActivity" />
+        <activity android:name=".signin.SigninActivity" />
     </application>
 </manifest>
