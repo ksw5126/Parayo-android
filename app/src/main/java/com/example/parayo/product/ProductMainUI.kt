@@ -13,7 +13,9 @@ import com.example.parayo.signin.SigninActivity
 import com.google.android.material.navigation.NavigationView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
+import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.design.navigationView
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.drawerLayout
 
 /**
@@ -29,17 +31,30 @@ class ProductMainUI(private val viewModel: ProductMainViewModel) :
     override fun createView(ui: AnkoContext<ProductMainActivity>) =
         ui.drawerLayout {
             drawerLayout = this
-            verticalLayout {
-                toolBar = toolbar {
-                    title = "Parayo"
-                    menu.add("Search")
-                        .setIcon(R.drawable.ic_search)
-                        .setShowAsAction(SHOW_AS_ACTION_ALWAYS)
-                }.lparams(matchParent, wrapContent)
-                view {
-                    backgroundColor = Color.parseColor("#DDDDDD")
-                }.lparams(matchParent, dip(1))
-            }.lparams(matchParent, matchParent)
+            frameLayout {
+                verticalLayout {
+                    toolBar = toolbar {
+                        title = "Parayo"
+                        menu.add("Search")
+                            .setIcon(R.drawable.ic_search)
+                            .setShowAsAction(SHOW_AS_ACTION_ALWAYS)
+                    }.lparams(matchParent, wrapContent)
+                    view {
+                        backgroundColor = Color.parseColor("#DDDDDD")
+                    }.lparams(matchParent, dip(1))
+                }.lparams(matchParent, matchParent)
+                floatingActionButton {
+                    imageResource = R.drawable.ic_add
+                    onClick { viewModel.openRegistrationActivity() }
+                }.lparams {
+                    bottomMargin = dip(20)
+                    marginEnd = dip(20)
+                    gravity = Gravity.END or Gravity.BOTTOM
+                }
+            }
+
+
+
 
 
             navigationView = navigationView {
