@@ -5,18 +5,27 @@ import android.graphics.Color
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.MenuItem.SHOW_AS_ACTION_ALWAYS
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewpager.widget.ViewPager
 import com.example.parayo.R
 import com.example.parayo.common.Prefs
 import com.example.parayo.signin.SigninActivity
+import com.example.parayo.view.borderBottom
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.design.navigationView
+import org.jetbrains.anko.design.tabLayout
+import org.jetbrains.anko.design.themedTabLayout
 import org.jetbrains.anko.sdk27.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onQueryTextListener
 import org.jetbrains.anko.support.v4.drawerLayout
+import org.jetbrains.anko.support.v4.viewPager
 
 /**
  * Created by KSW on 2020-08-24
@@ -27,22 +36,47 @@ class ProductMainUI(private val viewModel: ProductMainViewModel) :
     lateinit var toolBar: Toolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
+    lateinit var tablayout: TabLayout
+    lateinit var viewpager : ViewPager
 
     override fun createView(ui: AnkoContext<ProductMainActivity>) =
         ui.drawerLayout {
             drawerLayout = this
+
             frameLayout {
                 verticalLayout {
                     toolBar = toolbar {
                         title = "Parayo"
+                        bottomPadding = dip(1)
+                        background = borderBottom(width = dip(1))
                         menu.add("Search")
                             .setIcon(R.drawable.ic_search)
+                            .setActionView(searchView {
+                                onQueryTextListener {
+                                    onQueryTextSubmit { key ->
+//                                        viewModel.openSearchActivity(key)
+                                        true
+                                    }
+                                }
+                            })
                             .setShowAsAction(SHOW_AS_ACTION_ALWAYS)
                     }.lparams(matchParent, wrapContent)
-                    view {
-                        backgroundColor = Color.parseColor("#DDDDDD")
-                    }.lparams(matchParent, dip(1))
-                }.lparams(matchParent, matchParent)
+
+                    tablayout = themedTabLayout(
+                        R.style.Widget_MaterialComponents_TabLayout
+                    ) {
+                        bottomPadding = dip(1)
+                        tabMode = MODE_SCROLLABLE
+                        tabGravity = GRAVITY_FILL
+                        background = borderBottom(width = dip(1))
+                        lparams(matchParent, wrapContent)
+                    }
+
+                    viewpager = viewPager {
+                        id = generateViewId()
+                    }.lparams(matchParent, matchParent)
+                }
+
                 floatingActionButton {
                     imageResource = R.drawable.ic_add
                     onClick { viewModel.openRegistrationActivity() }
@@ -54,13 +88,10 @@ class ProductMainUI(private val viewModel: ProductMainViewModel) :
             }
 
 
-
-
-
             navigationView = navigationView {
                 ProductMainNavHeader()
                     .createView(AnkoContext.create(context, this))
-                    .let(::addHeaderView)
+                    .run(::addHeaderView)
 
                 menu.apply {
                     add(NONE, MENU_ID_INQUIRY, NONE, "내 문의").apply {
@@ -74,8 +105,6 @@ class ProductMainUI(private val viewModel: ProductMainViewModel) :
             }.lparams(wrapContent, matchParent) {
                 gravity = Gravity.START
             }
-
-
         }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

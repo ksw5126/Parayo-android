@@ -3,6 +3,7 @@ package com.example.parayo.product
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.example.parayo.R
+import com.example.parayo.product.list.ProductListPagerAdapter
 import net.codephobia.ankomvvm.components.BaseActivity
 import org.jetbrains.anko.setContentView
 
@@ -18,6 +19,8 @@ class ProductMainActivity : BaseActivity<ProductMainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ui.setContentView(this)
+        ui.viewpager.adapter = ProductListPagerAdapter(supportFragmentManager)
+        ui.tablayout.setupWithViewPager(ui.viewpager)
         setupDrawerListener()
     }
 
