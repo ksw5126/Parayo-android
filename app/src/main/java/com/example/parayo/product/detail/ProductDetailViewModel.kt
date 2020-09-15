@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.parayo.api.ParayoApi
 import com.example.parayo.api.response.ApiResponse
 import com.example.parayo.api.response.ProductResponse
-//import com.example.parayo.inquiry.ProductInquiryActivity
+import com.example.parayo.inquiry.ProductInquiryActivity
 import com.example.parayo.product.ProductStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +18,6 @@ import java.text.NumberFormat
 /**
  * Created by KSW on 2020-08-27
  */
-
 
 class ProductDetailViewModel(app: Application) : BaseViewModel(app) {
 
@@ -66,10 +65,10 @@ class ProductDetailViewModel(app: Application) : BaseViewModel(app) {
         imageUrls.addAll(product.imagePaths)
     }
 
-//    fun openInquiryActivity() {
-//        startActivity<ProductInquiryActivity> {
-//            putExtra(ProductInquiryActivity.PRODUCT_ID, productId)
-//        }
-//    }
+    fun openInquiryActivity() {
+        startActivity<ProductInquiryActivity> {
+            putExtra(ProductInquiryActivity.PRODUCT_ID, productId)
+        }
+    }
 
 }

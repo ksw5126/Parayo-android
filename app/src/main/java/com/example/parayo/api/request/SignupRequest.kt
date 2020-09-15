@@ -1,6 +1,7 @@
 package com.example.parayo.api.request
 
 import android.util.Patterns
+import com.example.parayo.common.Prefs
 
 /**
  * Created by KSW on 2020-06-09
@@ -8,7 +9,8 @@ import android.util.Patterns
 class SignupRequest (
     val email : String?,
     val password : String?,
-    val name : String?
+    val name : String?,
+    val fcmToken : String? = Prefs.fcmToken
 ) {
     fun isNotValidEmail() =
         email.isNullOrBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()

@@ -1,5 +1,6 @@
 package com.example.parayo.api
 
+import com.example.parayo.api.request.InquiryRequest
 import com.example.parayo.api.request.ProductRegistrationRequest
 import com.example.parayo.api.request.SigninRequest
 import com.example.parayo.api.request.SignupRequest
@@ -16,11 +17,6 @@ interface ParayoApi {
 
     @GET("/api/v1/hello")
     suspend fun hello(): ApiResponse<String>
-
-    companion object {
-        val instance = ApiGenerator()
-            .generate(ParayoApi::class.java)
-    }
 
     @POST("/api/v1/users")
     suspend fun signup(@Body signupRequest: SignupRequest)
@@ -53,5 +49,27 @@ interface ParayoApi {
     suspend fun getProduct(@Path("id") id: Long)
             : ApiResponse<ProductResponse>
 
+    @GET("/api/v1/inquiries")
+    suspend fun getInquiries(
+        @Query("inquiryId") inquiryId: Long,
+        @Query("productId") productId: Long? = null,
+        @Query("requestUserId") requestUserId: Long? = null,
+        @Query("productOwnerId") productOwnerId: Long? = null,
+        @Query("direction") direction: String // prev,next
+    ): ApiResponse<List<InquiryResponse>>
+
+    @POST("/api/v1/inquiries")
+    suspend fun registerInquiry(
+        @Body request: InquiryRequest
+    ): ApiResponse<Response<Void>>
+
+    @PUT("/api/v1/users/fcm-token")
+    suspend fun updateFcmToken(fcmToken :String)
+            :ApiResponse<Response<Void>>
+
+    companion object {
+        val instance = ApiGenerator()
+            .generate(ParayoApi::class.java)
+    }
 
 }

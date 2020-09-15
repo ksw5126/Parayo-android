@@ -90,9 +90,9 @@ class ProductDetailUI(
                 backgroundColor = Color.DKGRAY
                 lparams(matchParent, wrapContent)
 
-//                button("상품 문의") {
-//                    onClick { viewModel.openInquiryActivity() }
-//                }
+                button("상품 문의") {
+                    onClick { viewModel.openInquiryActivity() }
+                }
             }
 
             applyConstraintSet {

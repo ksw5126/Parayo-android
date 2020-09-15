@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.example.parayo.R
 import com.example.parayo.common.Prefs
+import com.example.parayo.inquiry.myinquiry.MyInquiryActivity
 import com.example.parayo.signin.SigninActivity
 import com.example.parayo.view.borderBottom
 import com.google.android.material.navigation.NavigationView
@@ -54,7 +55,7 @@ class ProductMainUI(private val viewModel: ProductMainViewModel) :
                             .setActionView(searchView {
                                 onQueryTextListener {
                                     onQueryTextSubmit { key ->
-//                                        viewModel.openSearchActivity(key)
+                                        viewModel.openSearchActivity(key)
                                         true
                                     }
                                 }
@@ -109,7 +110,7 @@ class ProductMainUI(private val viewModel: ProductMainViewModel) :
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            MENU_ID_INQUIRY -> { viewModel.toast("내 문의")}
+            MENU_ID_INQUIRY -> { viewModel.startActivity<MyInquiryActivity>()}
             MENU_ID_LOGOUT -> {
                 Prefs.token = null
                 Prefs.refreshToken = null
